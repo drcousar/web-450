@@ -1,3 +1,11 @@
+    /*
+============================================
+; Title: NodeQuiz
+; Author: Don Couasr
+; Date: 29 September 2019
+; Description: MEAN Stack Node Quiz Project
+;===========================================
+*/
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 

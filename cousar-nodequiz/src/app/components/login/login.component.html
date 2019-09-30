@@ -1,0 +1,59 @@
+<!--
+    /*
+============================================
+; Title: NodeQuiz
+; Author: Don Couasr
+; Date: 29 September 2019
+; Description: MEAN Stack Node Quiz Project
+;===========================================
+*/
+-->
+<div class="container">
+
+    <mat-card class="form">
+      <mat-card-content>
+          <h2>Please sign in</h2>
+        <small *ngIf="errorMessage">{{ errorMessage }}</small>
+        <form
+          [formGroup]="form"
+          #loginForm="ngForm"
+          (ngSubmit)="onSubmit(form.value); form.reset()"
+        >
+          <small
+            *ngIf="
+              form.controls['employeeId'].hasError('required') &&
+              form.controls['employeeId'].touched
+            ">Employee Id is required
+          </small>
+          <small
+            *ngIf="
+              form.controls['employeeId'].hasError('pattern') &&
+              form.controls['employeeId'].touched
+            ">Invalid Employee Id
+          </small>
+          <mat-form-field class="inputStyle">
+            <input
+              type="text"
+              matInput
+              [formControl]="form.controls['employeeId']"
+              placeholder="Enter Employee Id"
+            />
+          </mat-form-field>
+  
+          <mat-card-actions>
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="!form.valid"
+              color="accent"
+              type="submit"
+            >
+              Log in
+            </button>
+          </mat-card-actions>
+        </form>
+        <br /><br />
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

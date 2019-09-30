@@ -1,0 +1,46 @@
+.left {
+    width: 25%;
+    background-color: white;
+    color: black;
+}
+
+.right {
+    width: 75%;
+    background-color: white;
+    color: black;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    color: white;
+}
+
+.wrapper {
+    padding: 70px 70px 0;
+    display: block;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+  /* Form Styles */
+.frm-login { width: 50%; margin: 0 auto; }
+.frm-login-panel { border: 1px solid black; }
+.frm-login-header { background-color: red; }
+.frm-login-toolbar { background-color: red; color: white }
+.frm-login-body { display: flex; flex-direction: column; margin-top: 15px; }
+.btn-login { background-color: gray; color: white; }
+.frm-login-actions { text-align: right }
+/* Global */
+.wrapper { width: 100%; margin-top: 10%; background-color: white}

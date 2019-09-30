@@ -5,7 +5,7 @@
     },
     "quizzes": {
         "quizId": "1",
-        "quiz1_slide": "quiz1_slide.pptx",
+        "quiz1_path": "assets/Presentations/ContinuousIntegration/",
         "quiz1_question1": "Lorem Ipsum?",
         "quiz1_q1_answer1": "Lorem Ipsum1",
         "quiz1_q1_answer2": "Lorem Ipsum2",

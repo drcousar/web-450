@@ -1,3 +1,11 @@
+    /*
+============================================
+; Title: NodeQuiz
+; Author: Don Couasr
+; Date: 29 September 2019
+; Description: MEAN Stack Node Quiz Project
+;===========================================
+*/
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
