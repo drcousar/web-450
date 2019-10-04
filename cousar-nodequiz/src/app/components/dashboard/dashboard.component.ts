@@ -13,7 +13,8 @@ import { Component, OnInit } from '@angular/core';
   template: `
   <div class="container">
     <mat-card color="accent" class="form">
-      <mat-card-content class="buttonGroup">
+      <mat-card-content>
+      
         <h2>Please select your topic:</h2>
 
         <button class="buttonStyle" mat-raised-button color="accent">

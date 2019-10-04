@@ -39,6 +39,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from "@angular/common";
 import { CookieService } from "ngx-cookie-service";
 import { HttpClientModule } from "@angular/common/http";
+import { PresentationComponent } from './components/presentation/presentation.component';
+import { CarouselModule } from 'primeng/carousel';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,8 @@ import { HttpClientModule } from "@angular/common/http";
     CumulativeSummaryComponent,
     E404Component,
     AuthLayoutComponent,
-    BaseLayoutComponent
+    BaseLayoutComponent,
+    PresentationComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +72,9 @@ import { HttpClientModule } from "@angular/common/http";
     MatCheckboxModule,
     MatDialogModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    CarouselModule
+  
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

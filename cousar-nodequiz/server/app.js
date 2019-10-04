@@ -10,7 +10,8 @@ const http = require('http');
 const mongoose = require('mongoose');
 const Employee = require('./models/employee');
 const bodyParser = require('body-parser');
-const port = 4200; // port the application listens on
+const port = 3000; // port the application listens on
+const path = require('path');
 
 // MongoDB (mLab) connection string
 // const connString = 'mongodb://<username>:<password>@<host-name>:<port><database-name>';
@@ -27,6 +28,10 @@ mongoose.connect(connString, {promiseLibrary: require('bluebird'), useNewUrlPars
 
 // App configurations
 let app = express();
+
+// Allows MEAN stack to run entire stack Angular and MongoDB
+app.use(express.static(path.join(__dirname, '../dist/cousar-nodequiz')));
+app.use('/', express.static(path.join(__dirname, '../dist/cousar-nodequiz')));
 
 /**
  * Setup

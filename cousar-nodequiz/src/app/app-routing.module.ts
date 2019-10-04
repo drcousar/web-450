@@ -15,6 +15,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BaseLayoutComponent } from "./shared";
 import { AuthLayoutComponent } from "./shared/auth-layout/auth-layout.component";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PresentationComponent } from './components/presentation/presentation.component'
 
 export const routes: Routes = [
   { 
@@ -27,7 +28,7 @@ export const routes: Routes = [
     ]
   },
   {
-    path: "home",
+    path: "",
     component: BaseLayoutComponent,
     children: [
       {
@@ -39,15 +40,23 @@ export const routes: Routes = [
             path: "summary",
             component: CumulativeSummaryComponent,
             canActivate: [AuthGuardService]
+          },
+          {
+            path: "presentation",
+            component: PresentationComponent,
+            canActivate: [AuthGuardService]
           }
         ]
       },
-      { path: "*", redirectTo: "/session/not-found" }
+      { 
+        path: "**", redirectTo: "/session/not-found"
+      }
       
     ];
   
+    //Note: useHash:true param turns the hashing on.  Had trouble with childrent routes without it
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash:true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
