@@ -34,6 +34,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from "@angular/material/dialog";
+import {MatRadioModule} from '@angular/material/radio';
+import {MatListModule} from '@angular/material/list';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from "@angular/common";
@@ -42,6 +44,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { PresentationComponent } from './components/presentation/presentation.component';
 import { CarouselModule } from 'primeng/carousel';
 import { RouterModule } from '@angular/router';
+import { QuizComponent } from './components/quiz/quiz.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,8 @@ import { RouterModule } from '@angular/router';
     E404Component,
     AuthLayoutComponent,
     BaseLayoutComponent,
-    PresentationComponent
+    PresentationComponent,
+    QuizComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +69,7 @@ import { RouterModule } from '@angular/router';
     MatIconModule,
     MatMenuModule,
     MatToolbarModule,
+    MatRadioModule,
     FlexLayoutModule,
     MatSidenavModule,
     MatFormFieldModule,
@@ -73,7 +78,8 @@ import { RouterModule } from '@angular/router';
     MatDialogModule,
     CommonModule,
     HttpClientModule,
-    CarouselModule
+    CarouselModule,
+    MatListModule
   
   ],
   providers: [CookieService],

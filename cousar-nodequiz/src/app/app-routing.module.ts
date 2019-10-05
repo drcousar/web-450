@@ -15,7 +15,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { BaseLayoutComponent } from "./shared";
 import { AuthLayoutComponent } from "./shared/auth-layout/auth-layout.component";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PresentationComponent } from './components/presentation/presentation.component'
+import { PresentationComponent } from './components/presentation/presentation.component';
+import { QuizComponent } from './components/quiz/quiz.component';
 
 export const routes: Routes = [
   { 
@@ -42,8 +43,13 @@ export const routes: Routes = [
             canActivate: [AuthGuardService]
           },
           {
-            path: "presentation",
+            path: "presentation/:id",
             component: PresentationComponent,
+            canActivate: [AuthGuardService]
+          },
+          {
+            path: "quiz/:id",
+            component: QuizComponent,
             canActivate: [AuthGuardService]
           }
         ]
@@ -54,7 +60,7 @@ export const routes: Routes = [
       
     ];
   
-    //Note: useHash:true param turns the hashing on.  Had trouble with childrent routes without it
+    //Note: useHash:true param turns the hashing on.  Had trouble with children routes without it
 @NgModule({
   imports: [RouterModule.forRoot(routes, {useHash:true})],
   exports: [RouterModule]

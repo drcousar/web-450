@@ -1,0 +1,50 @@
+<!--
+
+============================================
+; Title: NodeQuiz
+; Author: Don Couasr
+; Date: 03 October 2019
+; Description: MEAN Stack Node Quiz Project
+;===========================================
+
+-->
+<div fxLayout="column" style="margin-top: 5%; margin-left: 10%; width: 60%;">
+    <mat-card class="mat-elevation-z8">
+        <mat-card-title>{{quizChoice}} Quiz</mat-card-title>
+        <mat-card-content *ngIf="myQuiz.questions">
+            <div fxLayout="column">
+                <div fxFlex *ngFor="let question of myQuiz.questions">
+                    <mat-card class="mat-elevation-z8">
+                        <div fxLayout="column">
+                            <!-- questions-->
+                            <mat-list>
+                                <div fxLayout="row" fxLayoutGap="10px">
+                                    <p>Question: </p>
+                                    <p>{{question.text}}</p>
+                                </div>
+                            </mat-list>
+                            <br />
+                            <!-- answers -->
+                            <div fxLayout="row" fxLayoutGap="10px">
+                                <label>Answers:</label>
+                                <div fxLayout="column" fxLayoutGap="10px">
+                                    <mat-radio-group style="display: inline-flex; flex-direction: column;">
+                                        <mat-radio-button style="padding: 5px" *ngFor="let answer of question.answers" value="answer.id">
+                                            {{answer.text}}
+                                        </mat-radio-button>   
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card>                
+                </div>
+            </div>
+            <button (click)="submit()" mat-menu-item>
+                <span>Submit</span>
+            </button>
+        </mat-card-content>
+        <mat-card-actions>
+            <small><a routerLink="/presentation/{{quiz}}">Re-Take Training</a></small>
+        </mat-card-actions>
+    </mat-card>
+</div>

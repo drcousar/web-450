@@ -18,15 +18,15 @@ import { Component, OnInit } from '@angular/core';
         <h2>Please select your topic:</h2>
 
         <button class="buttonStyle" mat-raised-button color="accent">
-          QUIZ 1 Placeholder
+          <a routerLink="/presentation/1">OAuth</a>
         </button>
 
         <button class="buttonStyle" mat-raised-button color="accent">
-          QUIZ 2 Placeholder
+          <a routerLink="/presentation/2">Microservices</a>
         </button>
 
         <button class="buttonStyle" mat-raised-button color="accent">
-          QUIZ 3 Placeholder
+          <a routerLink="/presentation/3">Continuous Integration</a>
         </button>
       </mat-card-content>
     </mat-card>

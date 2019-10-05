@@ -71,6 +71,6 @@ logOut() {
   }
 
   navHome() {
-    this.router.navigate(["/home"]);
+    this.router.navigate(["/"]);
   }
 }
