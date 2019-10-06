@@ -1,7 +1,7 @@
     /*
 ============================================
 ; Title: NodeQuiz
-; Author: Don Couasr
+; Author: Don Cousar
 ; Date: 29 September 2019
 ; Description: MEAN Stack Node Quiz Project
 ;===========================================
@@ -65,7 +65,7 @@ export class AuthLayoutComponent implements OnInit {
   navHome() {
     const value: string = this.cookie.get("isAuthenticated");
     if (value) {
-      this.router.navigate(["/home"]);
+      this.router.navigate(["/"]);
     } else {
       this.router.navigate(["/session/login"]);
     }

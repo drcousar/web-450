@@ -1,7 +1,7 @@
 /*
 ============================================
 ; Title: NodeQuiz
-; Author: Don Couasr
+; Author: Don Cousar
 ; Date: 29 September 2019
 ; Description: MEAN Stack Node Quiz Project
 ;===========================================

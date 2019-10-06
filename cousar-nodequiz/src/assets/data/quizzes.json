@@ -1,0 +1,104 @@
+[{
+"oauthQuiz":
+    {
+      "quizId": 100,
+      "questions": [
+        {
+            "id": 1,
+            "text": "What is the best answer to define OAuth?",
+            "answers": [
+            {
+                "id": 200,
+                "text": "An authorization framework that enables 3rd party applications to obtain limited access to a web service",
+                "isCorrect": false
+            },
+            {
+                "id": 201,
+                "text": "A simple way to publish and interact with protected data",
+                "isCorrect": false
+            },
+            {
+                "id": 202,
+                "text": "A more safe and secure way to give you access to data",
+                "isCorrect": false
+            },
+            {
+                "id": 203,
+                "text": "All of the above",
+                "isCorrect": true
+            }
+          ]
+        }
+
+      ]
+    }
+},
+{
+"microservicesQuiz":
+    {
+        "quizId": 101,
+        "questions": [
+        {
+            "id": 1,
+            "text": "A microservice is an architecture that structures an application as ___________.",
+            "answers": [
+            {
+                "id": 200,
+                "text": "A collection of services",
+                "isCorrect": true
+            },
+            {
+                "id": 201,
+                "text": "A way to safe way to secure an application",
+                "isCorrect": false
+            },
+            {
+                "id": 202,
+                "text": "A load balanced method of interacting with HTTP",
+                "isCorrect": false
+            },
+            {
+                "id": 203,
+                "text": "A cloud based solution",
+                "isCorrect": false
+            }
+            ]
+        }
+
+        ]
+    }
+},
+{
+"continuousIntegrationQuiz":
+    {
+        "quizId": 102,
+        "questions": [
+        {
+            "id": 1,
+            "text": "Continuous integration is ______.",
+            "answers": [
+            {
+                "id": 200,
+                "text": "The practice of integrating changes from different developers in the team into a mainline as early as possible.",
+                "isCorrect": true
+            },
+            {
+                "id": 201,
+                "text": "The practice of integrating changes from different developers in the team into a mainline as close to the due date as possible.",
+                "isCorrect": false
+            },
+            {
+                "id": 202,
+                "text": "Software designed to integrate changes without an administrator’s input.",
+                "isCorrect": false
+            },
+            {
+                "id": 203,
+                "text": "Running software 24 hours per day, so the business increases it’s productivity",
+                "isCorrect": false
+            }
+            ]
+        }
+        ]
+    }
+}]

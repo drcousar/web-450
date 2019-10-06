@@ -1,6 +1,13 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
-
+   /*
+============================================
+; Title: NodeQuiz
+; Author: Don Cousar
+; Date: 29 September 2019
+; Description: MEAN Stack Node Quiz Project
+;===========================================
+*/
 module.exports = function (config) {
   config.set({
     basePath: '',

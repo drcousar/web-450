@@ -1,3 +1,11 @@
+   /*
+============================================
+; Title: NodeQuiz
+; Author: Don Cousar
+; Date: 29 September 2019
+; Description: MEAN Stack Node Quiz Project
+;===========================================
+*/
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.

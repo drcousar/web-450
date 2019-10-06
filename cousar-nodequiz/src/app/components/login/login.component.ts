@@ -1,7 +1,7 @@
     /*
 ============================================
 ; Title: NodeQuiz
-; Author: Don Couasr
+; Author: Don Cousar
 ; Date: 29 September 2019
 ; Description: MEAN Stack Node Quiz Project
 ;===========================================
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
       if (res) {
         console.log(res)
         this.cookie.set("isAuthenticated", "true", 7);
-        this.router.navigate(["/home"]);
+        this.router.navigate(["/"]);
       } else {
         this.errorMessage = "Invalid Employee ID";
       }
