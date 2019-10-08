@@ -29,7 +29,7 @@
                                 <label>Answers:</label>
                                 <div fxLayout="column" fxLayoutGap="10px">
                                     <mat-radio-group style="display: inline-flex; flex-direction: column;">
-                                        <mat-radio-button style="padding: 5px" *ngFor="let answer of question.answers" value="answer.id">
+                                        <mat-radio-button style="padding: 5px" *ngFor="let answer of question.answers" [value]="answer.id">
                                             {{answer.text}}
                                         </mat-radio-button>   
                                     </mat-radio-group>
