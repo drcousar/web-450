@@ -67,6 +67,11 @@ export class BaseLayoutComponent implements OnInit {
 logOut() {
     this.cookie.get("isAuthenticated");
     this.cookie.delete("isAuthenticated");
+
+    //also remove employee id cookie
+    this.cookie.get("employeeId");
+    this.cookie.delete("employeeID");
+
     this.router.navigate(["/session/login"]);
   }
 

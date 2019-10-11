@@ -57,6 +57,32 @@ app.get('/api/employees', function(req, res, next) {
 });
 
 /**
+ * Post Quiz Results - C
+ */
+
+app.post('/api/results', function(req, res, next){
+  /*
+  var quizData = new Quiz(req.body);
+  quizData.save().then(item=>{
+    res.send("item saved to MongoDB");
+  })
+  .catch(err => {
+    res.status(400).send("unable to save to MongoDB");
+  });
+  
+  */
+/** Not working yet
+  if (err) {
+    console.log('API Error' + err);
+    return next(err);
+  } else {
+    console.log(req.body);
+    console.log(res.body);
+  }
+ */
+});
+
+/**
  * Get employee by employeeId
  */
 app.get('/api/employees/:id', function(req, res, next) {

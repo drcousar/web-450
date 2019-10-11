@@ -75,6 +75,8 @@ export class LoginComponent implements OnInit {
       if (res) {
         console.log(res)
         this.cookie.set("isAuthenticated", "true", 7);
+        //add employee ID to cookie
+        this.cookie.set("employeeId", employeeId, 7);
         this.router.navigate(["/"]);
       } else {
         this.errorMessage = "Invalid Employee ID";

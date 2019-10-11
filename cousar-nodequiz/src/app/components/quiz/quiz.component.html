@@ -12,36 +12,38 @@
     <mat-card class="mat-elevation-z8">
         <mat-card-title>{{quizChoice}} Quiz</mat-card-title>
         <mat-card-content *ngIf="myQuiz.questions">
-            <div fxLayout="column">
-                <div fxFlex *ngFor="let question of myQuiz.questions">
-                    <mat-card class="mat-elevation-z8">
-                        <div fxLayout="column">
-                            <!-- questions-->
-                            <mat-list>
-                                <div fxLayout="row" fxLayoutGap="10px">
-                                    <p>Question: </p>
-                                    <p>{{question.text}}</p>
-                                </div>
-                            </mat-list>
-                            <br />
-                            <!-- answers -->
-                            <div fxLayout="row" fxLayoutGap="10px">
-                                <label>Answers:</label>
-                                <div fxLayout="column" fxLayoutGap="10px">
-                                    <mat-radio-group style="display: inline-flex; flex-direction: column;">
-                                        <mat-radio-button style="padding: 5px" *ngFor="let answer of question.answers" [value]="answer.id">
+            <form #f="ngForm" (ngSubmit)="onSubmit(f.value); f.reset();">
+                <div fxLayout="column">
+                    <div fxFlex *ngFor="let question of myQuiz.questions">
+                        <mat-card class="mat-elevation-z8">
+                            <div fxLayout="column">
+                                <!-- questions-->
+                                <mat-list>
+                                    <div fxLayout="row" fxLayoutGap="10px">
+                                        <p>Question: </p>
+                                        <p>{{question.text}}</p>
+                                    </div>
+                                </mat-list>
+                                <br />
+                                <!-- answers -->
+                                <div fxLayout="row" fxLayoutGap="10px" ngModelGroup="answerBank">
+                                    <label>Answers:</label>
+                                    <div fxLayout="column" fxLayoutGap="10px" >
+                                        <div *ngFor="let answer of question.answers" style="flex-direction: column;">
+                                            <input [(ngModel)]="question[question.id]" [checked]="question[question.id]" value="{{answer.id}};{{answer.isCorrect}}"
+                                            name="question{{question.id}}" type="radio" required/>
                                             {{answer.text}}
-                                        </mat-radio-button>   
-                                    </mat-radio-group>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </mat-card>                
-                </div>
-            </div>
-            <button (click)="submit()" mat-menu-item>
-                <span>Submit</span>
-            </button>
+                        </mat-card>                
+                    </div>
+                </div>           
+                <button mat-menu-item>
+                    <span>Submit</span>
+                </button>
+        </form>
         </mat-card-content>
         <mat-card-actions>
             <small><a routerLink="/presentation/{{quiz}}">Re-Take Training</a></small>

@@ -6,9 +6,14 @@
 ; Description: MEAN Stack Node Quiz Project
 ;===========================================
 */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
+import { CookieService } from 'ngx-cookie-service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {NgForm} from '@angular/forms';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-quiz',
@@ -18,10 +23,14 @@ import { HttpClient } from "@angular/common/http";
 
 export class QuizComponent implements OnInit {
   title = 'Take Quiz';
+  employeeId: any;
   quiz: number;
   quizChoice: string;
   myQuiz: any;
-  http: HttpClient;
+  //http: HttpClient;
+  quizResults: any;
+  questions: any = [];
+  question: any = [];
  
 
 //BEGIN Mock JSON Data;  In real production this data would import into MongoDB 
@@ -831,8 +840,9 @@ export class QuizComponent implements OnInit {
 //END MOCK JSON Data
 
 
-  constructor(private route: ActivatedRoute) { 
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, private dialog: MatDialog, private http: HttpClient) { 
     this.quiz = parseInt(this.route.snapshot.paramMap.get("id"), 10);
+    this.employeeId = parseInt(this.cookieService.get('employeeId'), 10);
 
     //need to come up with some logic to make this dynamic, maybe loop thru db
     if (this.quiz === 1) {
@@ -847,6 +857,71 @@ export class QuizComponent implements OnInit {
       this.quizChoice = "Continuous Integration";
       this.myQuiz = this.continuousIntegrationQuiz.filter(q => q.quizId === 102)[0];;
     }
+  }
+
+  extractData(res: Response) {
+    let body = res.json();
+    return body || {};
+  }
+  handleErrorObservable (error: Response | any) {
+    console.error(error.message || error);
+    return 'Error';
+  } 
+
+  onSubmit(formData){
+    console.log('Begin Form Submission');
+    this.quizResults = formData;
+    this.quizResults['employeeId'] = this.employeeId;
+    this.quizResults['quiz'] = this.quiz;
+
+    const data = {'quizId': this.quizResults['quiz'], 'employeeId': this.quizResults['employeeId'], 'answerBand': this.quizResults['answerBank']};
+    const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
+
+    //console.log(this.quizResults['employeeId']); //show employee ID number, debug only
+    console.table(this.quizResults);  //show quiz results
+
+    //Write answers to console
+    //console.log(this.quizResults['answerBank']); //show answers, debug only
+  
+    /*
+    * Scoring section
+    */
+    var scoredResults: any 
+    let x = 0;  //instantiate score at 0
+    
+    //iterate 10 times (1 per question) and count points where user answered correctly
+    for(let i = 1; i < 11; i++) {
+     
+     scoredResults = this.quizResults['answerBank']['question' + i]; 
+     var isQuestionCorrect = scoredResults.split(";")[1]; //parse results to determine if answered correctly
+     //console.log(scoredResults + ':' + isQuestionCorrect); //view answers Sanity check, comment out after debug
+
+     //Test results and grant 10 points where user answered correctly
+      if(isQuestionCorrect === "true") {
+        x = (x + 10);
+      } else {
+        x = (x + 0);
+      }
+    }
+
+    //console.log('Score: ' + x);  //write user's score to console, debug Only
+    this.quizResults['score'] = x;  //write score to object
+    console.table(this.quizResults); //verify quizResults updated in console
+    /*
+        console.log('begin api request');
+
+    return this.http.post('/api/results', data, config).subscribe(
+      res => {
+        console.table(res);
+      }
+    )
+    
+      */
+    
+    //return this.http.post('/api/results', (req, res) => {
+      
+    //});
+      
   }
 
   ngOnInit() {
