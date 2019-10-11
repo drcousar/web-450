@@ -12,9 +12,9 @@ const Schema = mongoose.Schema;
 
 //Define Schema
 let resultsSchema = new Schema({
-  employeeId: {type: Number, required: true },
-  quizId: {type: Number}, required: true,
-  answerBank: {type: Array}
+  employeeId: {type: Number},
+  quizId: {type: Number},
+  score: {type: Number}
 })
 
 //export module

@@ -31,6 +31,7 @@ export class QuizComponent implements OnInit {
   quizResults: any;
   questions: any = [];
   question: any = [];
+  displayResults: any;
  
 
 //BEGIN Mock JSON Data;  In real production this data would import into MongoDB 
@@ -874,7 +875,7 @@ export class QuizComponent implements OnInit {
     this.quizResults['employeeId'] = this.employeeId;
     this.quizResults['quiz'] = this.quiz;
 
-    const data = {'quizId': this.quizResults['quiz'], 'employeeId': this.quizResults['employeeId'], 'answerBand': this.quizResults['answerBank']};
+    
     const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
 
     //console.log(this.quizResults['employeeId']); //show employee ID number, debug only
@@ -906,7 +907,21 @@ export class QuizComponent implements OnInit {
 
     //console.log('Score: ' + x);  //write user's score to console, debug Only
     this.quizResults['score'] = x;  //write score to object
+    const data = {'quizId': this.quizResults['quiz'], 'employeeId': this.quizResults['employeeId'], 'score': this.quizResults['score']};
+
     console.table(this.quizResults); //verify quizResults updated in console
+    
+    //this.displayResults = JSON.stringify(this.quizResults);
+
+    //onsole.log('Results' + this.displayResults);
+
+    console.log(data);
+
+    return this.http.post('/api/results', data, config).subscribe(
+      (res) => {
+        console.log("POST: " + res);
+      }
+    );
     /*
         console.log('begin api request');
 

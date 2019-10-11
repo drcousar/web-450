@@ -12,6 +12,7 @@ const Employee = require('./models/employee');
 const bodyParser = require('body-parser');
 const port = 3000; // port the application listens on
 const path = require('path');
+const Results = require('./models/results');
 
 // MongoDB (mLab) connection string
 // const connString = 'mongodb://<username>:<password>@<host-name>:<port><database-name>';
@@ -61,6 +62,22 @@ app.get('/api/employees', function(req, res, next) {
  */
 
 app.post('/api/results', function(req, res, next){
+  const result = {
+    employeeId: req.body.employeeId,
+    quizId: req.body.quizId,
+    score: req.body.score
+  };
+
+  Results.create(result, function(err, results){
+    if(err) {
+      console.log(err);
+      return next(err);
+    } else {
+      console.log(results);
+      res.json(results);
+    }
+  });
+  
   /*
   var quizData = new Quiz(req.body);
   quizData.save().then(item=>{
@@ -69,8 +86,10 @@ app.post('/api/results', function(req, res, next){
   .catch(err => {
     res.status(400).send("unable to save to MongoDB");
   });
-  
+
   */
+
+
 /** Not working yet
   if (err) {
     console.log('API Error' + err);
