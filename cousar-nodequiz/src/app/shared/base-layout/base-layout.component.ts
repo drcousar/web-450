@@ -21,9 +21,13 @@ import { Router } from "@angular/router";
           <button mat-button class="toolbar__icon-button mat-button">
             
             <span style="margin-left: 5px !important" (click)="navHome()"
-              >NodeQuiz</span
+              >Dashboard</span
             >
           </button>
+          <button mat-button class="toolbar__icon-button mat-button">
+          <span style="margin-left: 15px !important" [routerLink]="['/csummary']"
+            >Cumulative Summary</span>
+        </button>
 
           <div fxFlex></div>
 

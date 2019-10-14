@@ -13,6 +13,7 @@ const bodyParser = require('body-parser');
 const port = 3000; // port the application listens on
 const path = require('path');
 const Results = require('./models/results');
+const Summary = require('./models/summary');
 
 // MongoDB (mLab) connection string
 // const connString = 'mongodb://<username>:<password>@<host-name>:<port><database-name>';
@@ -76,31 +77,47 @@ app.post('/api/results', function(req, res, next){
       console.log(results);
       res.json(results);
     }
-  });
-  
-  /*
-  var quizData = new Quiz(req.body);
-  quizData.save().then(item=>{
-    res.send("item saved to MongoDB");
   })
-  .catch(err => {
-    res.status(400).send("unable to save to MongoDB");
-  });
-
-  */
-
-
-/** Not working yet
-  if (err) {
-    console.log('API Error' + err);
-    return next(err);
-  } else {
-    console.log(req.body);
-    console.log(res.body);
-  }
- */
 });
 
+
+/**
+ * Create Cumulative Summary entry
+ */
+app.post('/api/summary', function(req, res, next){
+  const summary = {
+    employeeId: req.body.employeeId,
+    quizId: req.body.quizId,
+    date: req.body.date,
+    score: req.body.score
+  };
+
+  Summary.create(summary, function(err, summary){
+    if(err) {
+      console.log(err);
+      return next(err);
+    } else {
+      console.log(summary);
+      res.json(summary);
+    }
+  })
+});
+
+/**
+ * Get Cumulative Summary entries
+ */
+app.get('/api/summary', function(req, res, next) {
+  Summary.find({}, function(err, summary) {
+    if (err) {
+      console.log(err);
+      return next(err);
+    } else {
+      console.log('Showing Node Cumulative Results:')
+      console.log(summary);
+      res.json(summary);
+    }
+  })
+});
 /**
  * Get employee by employeeId
  */

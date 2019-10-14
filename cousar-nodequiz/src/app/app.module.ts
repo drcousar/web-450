@@ -18,6 +18,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { CumulativeSummaryComponent } from './components/cumulative-summary/cumulative-summary.component';
 import { E404Component } from './components/e404/e404.component';
+import { QuizSummaryDialogComponent } from './components/quiz-summary-dialog/quiz-summary-dialog.component';
 
 //shared
 import { AuthLayoutComponent } from './shared/auth-layout/auth-layout.component';
@@ -46,6 +47,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { RouterModule } from '@angular/router';
 import { QuizComponent } from './components/quiz/quiz.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +58,8 @@ import { QuizComponent } from './components/quiz/quiz.component';
     AuthLayoutComponent,
     BaseLayoutComponent,
     PresentationComponent,
-    QuizComponent
+    QuizComponent,
+    QuizSummaryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -83,6 +86,7 @@ import { QuizComponent } from './components/quiz/quiz.component';
   
   ],
   providers: [CookieService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [QuizSummaryDialogComponent]
 })
 export class AppModule { }

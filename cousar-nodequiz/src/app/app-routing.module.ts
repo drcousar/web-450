@@ -38,7 +38,7 @@ export const routes: Routes = [
             canActivate: [AuthGuardService]
           },
           {
-            path: "summary",
+            path: "csummary",
             component: CumulativeSummaryComponent,
             canActivate: [AuthGuardService]
           },

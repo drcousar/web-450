@@ -7,12 +7,15 @@
 ;===========================================
 */
 import { Component, OnInit, Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { CookieService } from 'ngx-cookie-service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {NgForm} from '@angular/forms';
 import { Observable } from 'rxjs';
+import { QuizSummaryDialogComponent } from '../quiz-summary-dialog/quiz-summary-dialog.component';
+import { Router } from "@angular/router";
+import * as moment from "moment";
 
 
 @Component({
@@ -32,6 +35,7 @@ export class QuizComponent implements OnInit {
   questions: any = [];
   question: any = [];
   displayResults: any;
+  router: Router;
  
 
 //BEGIN Mock JSON Data;  In real production this data would import into MongoDB 
@@ -841,10 +845,10 @@ export class QuizComponent implements OnInit {
 //END MOCK JSON Data
 
 
-  constructor(private route: ActivatedRoute, private cookieService: CookieService, private dialog: MatDialog, private http: HttpClient) { 
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, public dialog: MatDialog, private http: HttpClient) { 
     this.quiz = parseInt(this.route.snapshot.paramMap.get("id"), 10);
     this.employeeId = parseInt(this.cookieService.get('employeeId'), 10);
-
+    
     //need to come up with some logic to make this dynamic, maybe loop thru db
     if (this.quiz === 1) {
       this.quizChoice = "OAuth";
@@ -874,7 +878,7 @@ export class QuizComponent implements OnInit {
     this.quizResults = formData;
     this.quizResults['employeeId'] = this.employeeId;
     this.quizResults['quiz'] = this.quiz;
-
+    
     
     const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
 
@@ -909,6 +913,8 @@ export class QuizComponent implements OnInit {
     this.quizResults['score'] = x;  //write score to object
     const data = {'quizId': this.quizResults['quiz'], 'employeeId': this.quizResults['employeeId'], 'score': this.quizResults['score']};
 
+    const summaryData = {'quizId': this.quizResults['quiz'], 'employeeId': this.quizResults['employeeId'], 'date': moment().format(), 'score': this.quizResults['score']};
+
     console.table(this.quizResults); //verify quizResults updated in console
     
     //this.displayResults = JSON.stringify(this.quizResults);
@@ -920,23 +926,57 @@ export class QuizComponent implements OnInit {
     return this.http.post('/api/results', data, config).subscribe(
       (res) => {
         console.log("POST: " + res);
+      },
+      (err) => {
+        console.log(err);
+      },
+      () => {
+        this.openDialog();
+        this.writeCumScore(summaryData, config);
       }
     );
-    /*
-        console.log('begin api request');
+    
 
-    return this.http.post('/api/results', data, config).subscribe(
-      res => {
-        console.table(res);
+    
+      
+  }
+
+  //Write to summary collection
+  writeCumScore(summaryData, config) {
+    console.log('Writing Cumulative Summary Entry');
+
+    return this.http.post('/api/summary', summaryData, config).subscribe(
+      (res) => {
+        console.log("POST: " + res);
+      },
+      (err) => {
+        console.log(err);
+      },
+      () => {
+        
       }
-    )
-    
-      */
-    
-    //return this.http.post('/api/results', (req, res) => {
-      
-    //});
-      
+    );
+
+  }
+
+  //Dialog Code. Must figure out how to pass variable to the modal.
+  openDialog() {
+    console.log('Dialog Score: ' + this.quizResults['score']);
+    const dialogRef = this.dialog.open(QuizSummaryDialogComponent, {
+      data: {
+        quizScore: this.quizResults['score']
+      },
+      disableClose: true,
+      width: '800px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this.router.navigate(['/']);
+      }
+    })
+
+    dialogRef.componentInstance.quizSummary = this.quizResults;
   }
 
   ngOnInit() {
