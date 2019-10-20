@@ -1,4 +1,4 @@
-    /*
+/*
 ============================================
 ; Title: NodeQuiz
 ; Author: Don Cousar
@@ -31,15 +31,24 @@ export class QuizComponent implements OnInit {
   quizChoice: string;
   myQuiz: any;
   //http: HttpClient;
-  quizResults: any;
+  public quizResults: any;
   questions: any = [];
   question: any = [];
   displayResults: any;
   router: Router;
+  quizBank: any = [];
+  wrongBank: any = [];
+
+  public myQuestions = {
+    question: []
+  }
  
+  public selectedAnswers = [];
+  public correctAnswers = [];
+  public questionsAnsweredWrong = [];
 
 //BEGIN Mock JSON Data;  In real production this data would import into MongoDB 
- oauthQuiz: any = [
+  oauthQuiz: any = [
     {
       quizId: 100,
       questions: [
@@ -195,7 +204,7 @@ export class QuizComponent implements OnInit {
             {
               id: 223,
               text: 'd. The consumer obtains an access token',
-              isCorrect: true
+              isCorrect: false
             }
           ]
         },
@@ -844,7 +853,6 @@ export class QuizComponent implements OnInit {
   ];  
 //END MOCK JSON Data
 
-
   constructor(private route: ActivatedRoute, private cookieService: CookieService, public dialog: MatDialog, private http: HttpClient) { 
     this.quiz = parseInt(this.route.snapshot.paramMap.get("id"), 10);
     this.employeeId = parseInt(this.cookieService.get('employeeId'), 10);
@@ -862,6 +870,8 @@ export class QuizComponent implements OnInit {
       this.quizChoice = "Continuous Integration";
       this.myQuiz = this.continuousIntegrationQuiz.filter(q => q.quizId === 102)[0];;
     }
+
+    this.quizBank = this.myQuiz;
   }
 
   extractData(res: Response) {
@@ -874,11 +884,14 @@ export class QuizComponent implements OnInit {
   } 
 
   onSubmit(formData){
+    console.log('MyQuiz');
+    console.table(this.quizBank);
+    console.log(this.quizBank.questions[0]);
+
     console.log('Begin Form Submission');
     this.quizResults = formData;
     this.quizResults['employeeId'] = this.employeeId;
     this.quizResults['quiz'] = this.quiz;
-    
     
     const config = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
 
@@ -893,12 +906,19 @@ export class QuizComponent implements OnInit {
     */
     var scoredResults: any 
     let x = 0;  //instantiate score at 0
+    let y = 0;
+
+    var tempQuestion: string;
+
     
+
+
     //iterate 10 times (1 per question) and count points where user answered correctly
     for(let i = 1; i < 11; i++) {
-     
+      
      scoredResults = this.quizResults['answerBank']['question' + i]; 
      var isQuestionCorrect = scoredResults.split(";")[1]; //parse results to determine if answered correctly
+     var answerText = scoredResults.split(";")[2];
      //console.log(scoredResults + ':' + isQuestionCorrect); //view answers Sanity check, comment out after debug
 
      //Test results and grant 10 points where user answered correctly
@@ -906,22 +926,74 @@ export class QuizComponent implements OnInit {
         x = (x + 10);
       } else {
         x = (x + 0);
-      }
-    }
 
+        //Begin logic
+        y = (i - 1);
+
+        //Write Questions that were incorrectly answered to an array
+        tempQuestion = this.quizBank.questions[y].text
+        this.questionsAnsweredWrong.push(tempQuestion);
+        
+        
+
+        //console.log('tq text: ' + tempQuestion); //Debug Only
+        //console.log('Answer Text: ' + answerText); //Debug Only
+
+        this.selectedAnswers.push(answerText);
+        
+
+      //Loop through correct answers for one that was answered incorrectly and display
+        for(let p = 0; p < 4; p++) {
+          if(this.quizBank.questions[y].answers[p].isCorrect === true) {
+          console.log(this.quizBank.questions[y].answers[p].text);
+          //this.correctAnswers.push(this.quizBank.questions[y].answers[p].text);
+          this.correctAnswers = this.quizBank.questions[y].answers[p].text;
+          } //end if condition
+        } //end for loop
+
+        this.myQuestions.question.push({
+          "question": tempQuestion,
+          "selectedAnswer": answerText,
+          "correctAnswers": this.correctAnswers
+        });
+
+      } //end if condition
+    } //end for loop
+    console.log('incorrect questions array')
+    console.table(this.questionsAnsweredWrong);
+
+    console.log('correct answers array')
+    console.table(this.correctAnswers);
+
+    console.log('answered answers array');
+    console.table(this.selectedAnswers);
+
+    console.log('MyQuestions Array');
+    console.table(this.myQuestions);
+
+
+    for(const prop in this.quizResults)
     //console.log('Score: ' + x);  //write user's score to console, debug Only
     this.quizResults['score'] = x;  //write score to object
-    const data = {'quizId': this.quizResults['quiz'], 'employeeId': this.quizResults['employeeId'], 'score': this.quizResults['score']};
-
+    this.quizResults['questions'] = this.questionsAnsweredWrong;
+    this.quizResults['correctAnswers'] = this.correctAnswers;
+    this.quizResults['selectedAnswers'] = this.selectedAnswers;
+    const questionData = {'questions': this.questionsAnsweredWrong, 'correctAnswers': this.correctAnswers, 'selectedAnswers': this.selectedAnswers};
+    const data = {'quizId': this.quizResults['quiz'], 'employeeId': this.quizResults['employeeId'], 'score': this.quizResults['score'], 'myQuestions': this.myQuestions};
+    
     const summaryData = {'quizId': this.quizResults['quiz'], 'employeeId': this.quizResults['employeeId'], 'date': moment().format(), 'score': this.quizResults['score']};
 
+    console.log('My Quiz Results');
     console.table(this.quizResults); //verify quizResults updated in console
     
     //this.displayResults = JSON.stringify(this.quizResults);
 
     //onsole.log('Results' + this.displayResults);
+    console.log('My data');
+    console.table(data);
 
-    console.log(data);
+    console.log('My questions');
+    console.table(questionData);
 
     return this.http.post('/api/results', data, config).subscribe(
       (res) => {
@@ -941,7 +1013,7 @@ export class QuizComponent implements OnInit {
       
   }
 
-  //Write to summary collection
+   //Write to summary collection
   writeCumScore(summaryData, config) {
     console.log('Writing Cumulative Summary Entry');
 
@@ -962,9 +1034,14 @@ export class QuizComponent implements OnInit {
   //Dialog Code. Must figure out how to pass variable to the modal.
   openDialog() {
     console.log('Dialog Score: ' + this.quizResults['score']);
+
     const dialogRef = this.dialog.open(QuizSummaryDialogComponent, {
       data: {
-        quizScore: this.quizResults['score']
+        quizScore: this.quizResults['score'],
+        questions: this.quizResults['questions'],
+        correctAnswers: this.quizResults['correctAnswers'],
+        selectedAnswers: this.quizResults['selectedAnswers'],
+        myQuestions: this.myQuestions
       },
       disableClose: true,
       width: '800px'

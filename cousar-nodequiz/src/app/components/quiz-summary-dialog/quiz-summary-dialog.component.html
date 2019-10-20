@@ -8,18 +8,16 @@
 -->
 <h1 mat-dialog-title>Node Quiz</h1>
 <div mat-dialog-content>
-  <h2>Quiz Results</h2>
-  <h3>Quiz Score: </h3>
-  <h3>Missed Question: </h3>
-  <p>You answered: </p>
-  <p>Correct answer: </p>
-  <!--
-  <mat-form-field>
-    <input matInput [(ngModel)]="">
-  </mat-form-field>
-  -->
-</div>
+    <h3>Quiz Score: {{quizScore}}</h3>
+    <h2>The following questions were answer incorrectly</h2> 
+    
+    <div *ngFor="let item of myQuestions.question">
+        <p><b>Question {{item.question}}</b></p>
+        <p class="wrongAnswer"> You Answered: {{item.selectedAnswer}}</p>
+        <p class="rightAnswer">The Correct Answer: {{item.correctAnswers}}</p>
+        <hr />
+    </div>
+
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
-
 </div>

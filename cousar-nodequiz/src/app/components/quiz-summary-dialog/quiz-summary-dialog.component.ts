@@ -21,24 +21,44 @@ import { QuizComponent } from "../quiz/quiz.component";
 export class QuizSummaryDialogComponent implements OnInit {
 
   quizSummary: any;
+  questions: any;
   correctAnswers: any;
   selectedAnswers: any;
   employeeId: string;
   quizScore: number;
+  foo: string;
+  myQuestions: [];
 
   constructor(
     private dialogRef: MatDialogRef<QuizSummaryDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data, private cookieService: CookieService
+    @Inject(MAT_DIALOG_DATA) data, @Inject(MAT_DIALOG_DATA) questionData, private cookieService: CookieService
   ) { 
     this.quizSummary = data.quizSummary;
     this.quizScore = data.quizScore;
-    console.log('Dialog Component Data: ' + data);
-    //this.correctAnswers = this.quizSummary.correctAnswers;
-    //this.selectedAnswers = this.quizSummary.selectedAnswers;
+    this.questions = data.questions;
+    this.correctAnswers = data.correctAnswers;
+    this.selectedAnswers = data.selectedAnswers;
+    this.myQuestions = data.myQuestions;
+    //this.correctAnswers = data.correctAnswers;
+    //this.selectedAnswers = data.selectedAnswers;
+    
+    console.log('foo');
+    console.table(this.quizSummary);
+
+    console.log('Dialog Component Data: ');
+    console.table(data);
+
     this.employeeId = this.cookieService.get('employeeId');
+    console.log('Dialog Questions');
+    console.table(this.questions);
+
+    console.log('Dialog My Questions');
+    console.table(this.myQuestions);
   }
 
   @Input() public quizResults;
+  @Input() public questionsAnsweredWrong;
+  
 
   onNoClick(): void {
     this.dialogRef.close();

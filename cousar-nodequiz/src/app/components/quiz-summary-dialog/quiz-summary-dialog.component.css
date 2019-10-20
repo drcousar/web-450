@@ -1,0 +1,9 @@
+.wrongAnswer{
+    border-style: groove;
+    border-color: red;
+}
+
+.rightAnswer{
+    border-style: groove;
+    border-color: green;
+}

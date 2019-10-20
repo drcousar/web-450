@@ -28,7 +28,7 @@
                                     <label>Answers:</label>
                                     <div fxLayout="column" fxLayoutGap="10px" >
                                         <div *ngFor="let answer of question.answers" style="flex-direction: column;">
-                                            <input [(ngModel)]="question[question.id]" [checked]="question[question.id]" value="{{answer.id}};{{answer.isCorrect}}"
+                                            <input [(ngModel)]="question[question.id]" [checked]="question[question.id]" value="{{answer.id}};{{answer.isCorrect}};{{answer.text}}"
                                             name="question{{question.id}}" type="radio" required/>
                                             {{answer.text}}
                                         </div>
